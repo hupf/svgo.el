@@ -5,6 +5,8 @@
 ;;; provides a command and a minor mode (that activates the key binding
 ;;; C-c f) to optimze the SVG contens of the current buffer or region.
 
+;;; Author: Mathis Hofer <mathis@fsfe.org>
+
 ;;; License:
 
 ;; This program is free software; you can redistribute it and/or modify
