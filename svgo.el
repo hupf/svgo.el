@@ -3,7 +3,7 @@
 ;;; Commentary:
 ;;; This package uses the Node utility SVGO to optimze SVG files.  It
 ;;; provides a command and a minor mode (that activates the key binding
-;;; C-c f) to optimze the SVG contens of the current buffer or region.
+;;; C-c f) to optimze the SVG contens of the current buffer.
 
 ;;; Author: Mathis Hofer <mathis@fsfe.org>
 
