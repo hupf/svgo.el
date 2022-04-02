@@ -1,7 +1,7 @@
 ;;; svgo.el --- SVG optimization with SVGO
 
 ;;; Commentary:
-;;; This package uses the Node utility SVGO to optimze SVG files.  It
+;;; This package uses the Node utility SVGO to optimize SVG files.  It
 ;;; provides a command and a minor mode (that activates the key binding
 ;;; C-c f) to optimze the SVG contens of the current buffer.
 

@@ -1,0 +1,21 @@
+= svg.el
+
+image:https://github.com/hupf/svgo.el/actions/workflows/tests.yml/badge.svg[Tests Status,link="https://github.com/hupf/svgo.el/actions/workflows/tests.yml"]
+image:https://img.shields.io/badge/license-GPL_v3-green.svg[GNU GPL v3,link="./LICENSE"]
+
+[quote]
+SVG optimization within Emacs with SVGO
+
+This package uses the Node utility https://github.com/svg/svgo[SVGO] to optimize SVG files. It provides a command and a minor mode (that activates the key binding `C-c f`) to optimze the SVG contens of the current buffer.
+
+== License
+
+This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 3, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+== Author
+
+Mathis Hofer
