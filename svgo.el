@@ -29,6 +29,8 @@
 
 ;;; Code:
 
+(require 'subr-x)
+
 (defun svgo ()
   "Optimize current buffer with SVGO."
   (interactive)
