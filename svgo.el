@@ -31,6 +31,7 @@
 
 (require 'subr-x)
 
+;;;###autoload
 (defun svgo ()
   "Optimize current buffer with SVGO."
   (interactive)
@@ -38,7 +39,7 @@
   (if (fboundp 'nvm-use-for-buffer)
       (nvm-use-for-buffer))
 
-  (if (ensure-svgo)
+  (if (svgo--ensure)
       (if (> (shell-command-on-region
               (point-min) (point-max)
               "svgo -i -" "*svgo*" t "*svgo-errors*" t)
@@ -57,31 +58,35 @@ See the command \\[svgo] and https://github.com/svg/svgo."
  :lighter " SVGO" ;; The indicator for the mode line.
  :keymap `((,(kbd "C-c f") . svgo)))
 
-(defun shell-which (command)
+(defun svgo--ensure ()
+  "Ensure SVGO is present or install it if user agrees."
+  (let ((svgo-bin (svgo--shell-which "svgo")))
+    (if svgo-bin
+        svgo-bin
+      (if (svgo--shell-which "npm")
+          (if (svgo--prompt-install)
+              (if (> (shell-command "npm i -g svgo" "*svgo*" "*svgo-errors*") 0)
+                  (progn
+                    (switch-to-buffer "*svgo-errors*")
+                    (message "An error occurred installing `svgo' using NPM")
+                    nil)
+                (svgo--shell-which "svgo")))
+        (message "No `svgo' command found and `npm' is not present")))))
+
+(defun svgo--shell-which (command)
   "Return the path to the given COMMAND if present or nil."
   (let ((path (shell-command-to-string (concat "/usr/bin/which " command))))
     (if (string-equal path "")
         nil
       (string-trim path))))
 
-(defun ensure-svgo ()
-  "Ensure SVGO is present or install it if user agrees."
-  (let ((svgo-bin (shell-which "svgo")))
-    (if svgo-bin
-        svgo-bin
-      (if (shell-which "npm")
-          (if (string-equal
-               (read-answer "No `svgo' command found, would you like to install it? "
-                            '(("yes" ?y "install `svgo' using NPM")
-                              ("no" ?n "don't install `svgo'")))
-               "yes")
-              (if (> (shell-command "npm i -g svgo" "*svgo*" "*svgo-errors*") 0)
-                  (progn
-                    (switch-to-buffer "*svgo-errors*")
-                    (message "An error occurred installing `svgo' using NPM")
-                    nil)
-                (shell-which "svgo")))
-        (message "No `svgo' command found and `npm' is not present")))))
+(defun svgo--prompt-install ()
+  "Prompt the user whether SVGO should be installed using NPM."
+  (string-equal
+   (read-answer "No `svgo' command found, would you like to install it? "
+                '(("yes" ?y "install `svgo' using NPM")
+                  ("no" ?n "don't install `svgo'")))
+   "yes"))
 
 (provide 'svgo)
 ;;; svgo.el ends here

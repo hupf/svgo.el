@@ -2,12 +2,12 @@
 
 ;;; Code:
 
-(autoload 'shell-which "./svgo.el")
+(autoload 'svgo--shell-which "./svgo.el")
 
 (ert-deftest shell-which-existing ()
-  (should (string-equal (shell-which "tar") "/usr/bin/tar")))
+  (should (string-equal (svgo--shell-which "tar") "/usr/bin/tar")))
 
 (ert-deftest shell-which-non-existing ()
-  (should (eq (shell-which "non-existing-command") nil)))
+  (should (eq (svgo--shell-which "non-existing-command") nil)))
 
 ;;; svgo.el-test.el ends here
