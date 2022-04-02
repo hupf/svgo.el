@@ -6,6 +6,9 @@
 ;;; C-c f) to optimze the SVG contens of the current buffer.
 
 ;;; Author: Mathis Hofer <mathis@fsfe.org>
+;;; Version: 1.0.0
+;;; Keywords: svg, svgo, node
+;;; URL: https://github.com/hupf/svgo.el/
 
 ;;; License:
 
