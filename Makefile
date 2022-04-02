@@ -17,4 +17,4 @@ compile: cask
 
 .PHONY: test
 test: compile
-	cask exec ert-runner
+	cask exec buttercup -L .

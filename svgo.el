@@ -36,11 +36,11 @@
   "Optimize current buffer with SVGO."
   (interactive)
   ;; Use current buffer's Node version if nvm.el is present
-  (if (fboundp 'nvm-use-for-buffer)
+  (when (fboundp 'nvm-use-for-buffer)
       (nvm-use-for-buffer))
 
-  (if (svgo--ensure)
-      (if (> (shell-command-on-region
+  (when (svgo--ensure)
+      (when (> (shell-command-on-region
               (point-min) (point-max)
               "svgo -i -" "*svgo*" t "*svgo-errors*" t)
              0)
