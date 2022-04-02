@@ -6,7 +6,7 @@ image:https://img.shields.io/badge/license-GPL_v3-green.svg[GNU GPL v3,link="./L
 [quote]
 SVG optimization within Emacs with SVGO
 
-This package uses the Node utility https://github.com/svg/svgo[SVGO] to optimize SVG files. It provides a command and a minor mode (that activates the key binding `C-c f`) to optimze the SVG contens of the current buffer.
+This package uses the Node utility https://github.com/svg/svgo[SVGO] to optimize SVG files. It provides a command and a minor mode (that activates the key binding `C-c f`) to optimize the SVG contens of the current buffer.
 
 == License
 
