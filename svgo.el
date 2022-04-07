@@ -1,9 +1,16 @@
 ;;; svgo.el --- SVG optimization with SVGO
 
 ;;; Commentary:
+
 ;;; This package uses the Node utility SVGO to optimize SVG files.  It
 ;;; provides a command and a minor mode (that activates the key binding
 ;;; C-c o) to optimize the SVG contens of the current buffer.
+;;;
+;;; To install this package you should use `use-package', like so:
+;;;
+;;; (use-package svgo
+;;;  :straight '(svgo :type git :host github :repo "hupf/svgo.el")
+;;;  :hook ((nxml-mode . svgo-mode)))
 
 ;;; Author: Mathis Hofer <mathis@fsfe.org>
 ;;; Version: 1.0.0
