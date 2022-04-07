@@ -3,7 +3,7 @@
 ;;; Commentary:
 ;;; This package uses the Node utility SVGO to optimize SVG files.  It
 ;;; provides a command and a minor mode (that activates the key binding
-;;; C-c f) to optimize the SVG contens of the current buffer.
+;;; C-c o) to optimize the SVG contens of the current buffer.
 
 ;;; Author: Mathis Hofer <mathis@fsfe.org>
 ;;; Version: 1.0.0
@@ -31,6 +31,9 @@
 
 (require 'subr-x)
 
+(defconst svgo-buffer "*svgo*")
+(defconst svgo-errors-buffer "*svgo-errors*")
+
 ;;;###autoload
 (defun svgo ()
   "Optimize current buffer with SVGO."
@@ -42,7 +45,7 @@
   (when (svgo--ensure)
       (when (> (shell-command-on-region
               (point-min) (point-max)
-              "svgo -i -" "*svgo*" t "*svgo-errors*" t)
+              "svgo -i -" svgo-buffer t svgo-errors-buffer t)
              0)
           ;; If command failed, make sure the region's content is not lost
           (undo))))
@@ -50,13 +53,13 @@
 (define-minor-mode svgo-mode
   "Toggle SVGO mode.
 
-When SVGO mode is enabled, the binding C-c f optimizes the SVG
+When SVGO mode is enabled, the binding C-c o optimizes the SVG
 vector graphic contents in current buffer or selected region with
 SVGO.
 See the command \\[svgo] and https://github.com/svg/svgo."
  :init-value nil
  :lighter " SVGO" ;; The indicator for the mode line.
- :keymap `((,(kbd "C-c f") . svgo)))
+ :keymap `((,(kbd "C-c o") . svgo)))
 
 (defun svgo--ensure ()
   "Ensure SVGO is present or install it if user agrees."
@@ -65,9 +68,9 @@ See the command \\[svgo] and https://github.com/svg/svgo."
         svgo-bin
       (if (svgo--shell-which "npm")
           (if (svgo--prompt-install)
-              (if (> (shell-command "npm install -g svgo" "*svgo*" "*svgo-errors*") 0)
+              (if (> (shell-command "npm install -g svgo" svgo-buffer svgo-errors-buffer) 0)
                   (progn
-                    (switch-to-buffer "*svgo-errors*")
+                    (switch-to-buffer svgo-errors-buffer)
                     (message "An error occurred installing `svgo' using NPM")
                     nil)
                 (svgo--shell-which "svgo")))
