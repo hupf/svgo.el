@@ -65,7 +65,7 @@ See the command \\[svgo] and https://github.com/svg/svgo."
         svgo-bin
       (if (svgo--shell-which "npm")
           (if (svgo--prompt-install)
-              (if (> (shell-command "npm i -g svgo" "*svgo*" "*svgo-errors*") 0)
+              (if (> (shell-command "npm install -g svgo" "*svgo*" "*svgo-errors*") 0)
                   (progn
                     (switch-to-buffer "*svgo-errors*")
                     (message "An error occurred installing `svgo' using NPM")
