@@ -13,9 +13,9 @@
 
 (describe "svgo--shell-which"
           (it "returns the path to the command if present"
-              (expect (svgo--shell-which "tar")
+              (expect (svgo--shell-which "yes")
                       :to-equal
-                      "/usr/bin/tar"))
+                      "/usr/bin/yes"))
 
           (it "returns nil if the path is not present"
               (expect (svgo--shell-which "non-existing-command")
