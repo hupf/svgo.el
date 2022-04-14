@@ -2,9 +2,10 @@
 
 ;;; Commentary:
 
-;;; This package uses the Node utility SVGO to optimize SVG files.  It
-;;; provides a command and a minor mode (that activates the key binding
-;;; C-c o) to optimize the SVG contens of the current buffer.
+;;; This package uses the Node utility SVGO to optimize SVG files. It
+;;; provides a command and an optional minor mode (that activates the
+;;; key binding C-c o) to can reduce the size of the SVG contents in
+;;; the current Emacs buffer.
 ;;;
 ;;; To install this package you should use `use-package', like so:
 ;;;

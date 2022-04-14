@@ -6,7 +6,9 @@ image:https://img.shields.io/badge/license-GPL_v3-green.svg[GNU GPL v3,link="./L
 [quote]
 SVG optimization within Emacs with SVGO
 
-This package uses the Node utility https://github.com/svg/svgo[SVGO] to optimize SVG files. It provides a command and a minor mode (that activates the key binding `C-c o`) to optimize the SVG contens of the current buffer.
+This package uses the Node utility https://github.com/svg/svgo[SVGO] to optimize SVG files. It provides a command and an optional minor mode to reduce the size of the SVG contents in the current Emacs buffer.
+
+== Installation
 
 To install this package you should use `use-package`, like so:
 
@@ -15,6 +17,30 @@ To install this package you should use `use-package`, like so:
 (use-package svgo
   :straight '(svgo :type git :host github :repo "hupf/svgo.el")
   :hook ((nxml-mode . svgo-mode)))
+----
+
+== Usage
+
+image::svgo.gif[Demonstration of the svgo-mode]
+
+After opening a SVG file in Emacs, you can toggle the image display with `C-c C-c`. Then either execute `M-x svgo` or with the `svgo-mode` minor mode configured you can press `C-c o` to optimize the file.
+
+If the `svgo` NPM package is missing you will be prompted to automatically install it.
+
+== Contribution
+
+Install https://github.com/cask/cask[Cask], then run:
+
+[source]
+----
+make
+----
+
+Run all tests with:
+
+[source]
+----
+make test
 ----
 
 == License
