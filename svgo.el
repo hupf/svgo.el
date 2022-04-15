@@ -48,15 +48,22 @@
   (interactive)
   ;; Use current buffer's Node version if nvm.el is present
   (when (fboundp 'nvm-use-for-buffer)
-      (nvm-use-for-buffer))
+    (nvm-use-for-buffer))
 
   (when (svgo--ensure)
-      (when (> (shell-command-on-region
-              (point-min) (point-max)
-              "svgo -i -" svgo-buffer t svgo-errors-buffer t)
-             0)
-          ;; If command failed, make sure the region's content is not lost
-          (undo))))
+    (let* ((result (svgo--with-buffer-size-change
+                    (lambda ()
+                      (shell-command-on-region
+                       (point-min) (point-max)
+                       "svgo -i -" svgo-buffer t svgo-errors-buffer t))))
+           (exit-code (nth 0 result))
+           (before-size (nth 1 result))
+           (after-size (nth 2 result))
+           (percentage (nth 3 result)))
+      (if (= exit-code 0)
+          (message "%s → %s (%s)" before-size after-size percentage)
+
+        (undo))))) ;; If command failed, undo to make sure the region's content is recovered
 
 (define-minor-mode svgo-mode
   "Toggle SVGO mode.
@@ -98,6 +105,30 @@ See the command \\[svgo] and https://github.com/svg/svgo."
                 '(("yes" ?y "install `svgo' using NPM")
                   ("no" ?n "don't install `svgo'")))
    "yes"))
+
+(defun svgo--with-buffer-size-change (wrapped-function)
+  "Call the WRAPPED-FUNCTION and measure the current buffer size before/after."
+  (let ((before (buffer-size)))
+    (let ((result (funcall wrapped-function)))
+      (let* ((after (buffer-size))
+             (factor (if (> after 0) (/ (float after) before) 0))
+             (before-human (svgo--human-bytes before))
+             (after-human (svgo--human-bytes after))
+             (percentage (format "%.2f %%" (* factor 100.0))))
+        (list
+         result
+         before-human
+         after-human
+         percentage)
+        ))))
+
+(defun svgo--human-bytes (bytes)
+  "Return given number of BYTES as human readable string with unit."
+  (cond
+   ((> bytes 1000000) (format "%.2f MB" (/ bytes 1000000.0)))
+   ((> bytes 100000) (format "%.2f kB" (/ bytes 1000.0)))
+   ((> bytes 1000) (format "%.2f kB" (/ bytes 1000.0)))
+   (t (format "%d B" bytes))))
 
 (provide 'svgo)
 ;;; svgo.el ends here

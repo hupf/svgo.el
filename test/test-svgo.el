@@ -11,22 +11,12 @@
 
 (require 'svgo)
 
-(describe "svgo--shell-which"
-          (it "returns the path to the command if present"
-              (expect (svgo--shell-which "yes")
-                      :to-equal
-                      "/usr/bin/yes"))
-
-          (it "returns nil if the path is not present"
-              (expect (svgo--shell-which "non-existing-command")
-                      :to-be
-                      nil)))
-
 (describe "svgo"
           (before-each
            (spy-on 'point-min :and-return-value 0)
            (spy-on 'point-max :and-return-value 100)
            (spy-on 'svgo--shell-which :and-return-value "/path/to/svgo")
+           (spy-on 'message)
            (spy-on 'undo))
 
           (it "replaces buffer content with optimized result from `svgo'"
@@ -43,7 +33,6 @@
 
           (it "prints message if both svgo and npm are missing"
               (spy-on 'svgo--shell-which :and-return-value nil)
-              (spy-on 'message)
               (svgo)
               (expect 'message :to-have-been-called-with "No `svgo' command found and `npm' is not present"))
 
@@ -66,5 +55,29 @@
               (svgo)
               (expect 'read-answer :to-have-been-called)
               (expect 'shell-command :not :to-have-been-called)))
+
+(describe "svgo--shell-which"
+          (it "returns the path to the command if present"
+              (expect (svgo--shell-which "yes") :to-equal "/usr/bin/yes"))
+
+          (it "returns nil if the path is not present"
+              (expect (svgo--shell-which "non-existing-command") :to-be nil)))
+
+(describe "svgo--human-bytes"
+          (it "returns \"123 B\" for 123"
+              (expect (svgo--human-bytes 123) :to-equal "123 B"))
+
+          (it "returns \"1.23 kB\" for 1234"
+              (expect (svgo--human-bytes 1234) :to-equal "1.23 kB"))
+
+          (it "returns \"123.46 kB\" for 123456"
+              (expect (svgo--human-bytes 123456) :to-equal "123.46 kB"))
+
+          (it "returns \"1.23 MB\" for 1234567"
+              (expect (svgo--human-bytes 1234567) :to-equal "1.23 MB")))
+
+(describe "svgo--with-buffer-size-change"
+          (it "returns result of wrapped function, before/after & percentage values"
+              (expect (svgo--with-buffer-size-change (lambda () "foo")) :to-equal (list "foo" "0 B" "0 B" "0.00 %"))))
 
 ;;; test-svgo.el ends here
