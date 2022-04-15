@@ -19,6 +19,8 @@ To install this package you should use `use-package`, like so:
   :hook ((nxml-mode . svgo-mode)))
 ----
 
+Also make sure you have Node/NPM installed on your machine.
+
 == Usage
 
 image::svgo.gif[Demonstration of the svgo-mode]
