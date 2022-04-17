@@ -38,6 +38,7 @@
 ;;; Code:
 
 (require 'subr-x)
+(require 'image-mode)
 
 (defconst svgo-buffer "*svgo*")
 (defconst svgo-errors-buffer "*svgo-errors*")
@@ -51,6 +52,10 @@
     (nvm-use-for-buffer))
 
   (when (svgo--ensure)
+    (when (and (eq major-mode 'image-mode)
+               (string-equal image-type "svg"))
+      ;; Switch to nxml-mode, when image is displayed
+      (image-toggle-display))
     (let* ((result (svgo--with-buffer-size-change
                     (lambda ()
                       (shell-command-on-region
