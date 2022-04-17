@@ -22,13 +22,13 @@
           (it "replaces buffer content with optimized result from `svgo'"
               (spy-on 'shell-command-on-region :and-return-value 0)
               (svgo)
-              (expect 'shell-command-on-region :to-have-been-called-with 0 100 "svgo -i -" "*svgo*" t "*svgo-errors*" t)
+              (expect 'shell-command-on-region :to-have-been-called-with 0 100 "svgo -i -" "*svgo*" t "*svgo*" t)
               (expect 'undo :not :to-have-been-called))
 
           (it "undos empty buffer caused by error result"
               (spy-on 'shell-command-on-region :and-return-value 1)
               (svgo)
-              (expect 'shell-command-on-region :to-have-been-called-with 0 100 "svgo -i -" "*svgo*" t "*svgo-errors*" t)
+              (expect 'shell-command-on-region :to-have-been-called-with 0 100 "svgo -i -" "*svgo*" t "*svgo*" t)
               (expect 'undo :to-have-been-called))
 
           (it "prints message if both svgo and npm are missing"
@@ -44,7 +44,7 @@
               (spy-on 'shell-command-on-region :and-return-value 0)
               (svgo)
               (expect 'read-answer :to-have-been-called)
-              (expect 'shell-command :to-have-been-called-with "npm install -g svgo" "*svgo*" "*svgo-errors*"))
+              (expect 'shell-command :to-have-been-called-with "npm install -g svgo" "*svgo*" "*svgo*"))
 
           (it "does not install svgo if svgo is missing, npm is present but user rejects"
               (spy-on 'svgo--shell-which :and-call-fake

@@ -41,8 +41,15 @@
 (require 'subr-x)
 (require 'image-mode)
 
-(defconst svgo-buffer "*svgo*")
-(defconst svgo-errors-buffer "*svgo-errors*")
+(defgroup svgo nil
+  "SVG optimization within Emacs with SVGO."
+  :group 'tools
+  :prefix "svgo-"
+  :link '(url-link :tag "Github" "https://github.com/hupf/svgo.el"))
+
+(defcustom svgo-process-buffer "*svgo*"
+  "Name of buffer used for process output."
+  :type 'string)
 
 ;;;###autoload
 (defun svgo ()
@@ -59,9 +66,10 @@
       (image-toggle-display))
     (let* ((result (svgo--with-buffer-size-change
                     (lambda ()
-                      (shell-command-on-region
-                       (point-min) (point-max)
-                       "svgo -i -" svgo-buffer t svgo-errors-buffer t))))
+                      (svgo--with-read-only-buffer
+                       (shell-command-on-region
+                        (point-min) (point-max)
+                        "svgo -i -" svgo-process-buffer t svgo-process-buffer t)))))
            (exit-code (nth 0 result))
            (before-size (nth 1 result))
            (after-size (nth 2 result))
@@ -89,9 +97,11 @@ See the command \\[svgo] and https://github.com/svg/svgo."
         svgo-bin
       (if (svgo--shell-which "npm")
           (if (svgo--prompt-install)
-              (if (> (shell-command "npm install -g svgo" svgo-buffer svgo-errors-buffer) 0)
+              (if (> (svgo--with-read-only-buffer
+                      (shell-command "npm install -g svgo" svgo-process-buffer svgo-process-buffer))
+                     0)
                   (progn
-                    (switch-to-buffer svgo-errors-buffer)
+                    (switch-to-buffer svgo-process-buffer)
                     (message "An error occurred installing `svgo' using NPM")
                     nil)
                 (svgo--shell-which "svgo")))
@@ -135,6 +145,12 @@ See the command \\[svgo] and https://github.com/svg/svgo."
    ((> bytes 100000) (format "%.2f kB" (/ bytes 1000.0)))
    ((> bytes 1000) (format "%.2f kB" (/ bytes 1000.0)))
    (t (format "%d B" bytes))))
+
+(defun svgo--with-read-only-buffer (result)
+  "Mark the `svgo-process-buffer' read only and return RESULT."
+  (let ((buffer (get-buffer svgo-process-buffer)))
+    (when buffer (with-current-buffer buffer (special-mode))))
+  result)
 
 (provide 'svgo)
 ;;; svgo.el ends here
