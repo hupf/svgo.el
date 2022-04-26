@@ -1,25 +1,4 @@
-;;; svgo.el --- SVG optimization with SVGO
-
-;;; Commentary:
-
-;;; This package uses the Node utility SVGO to optimize SVG files. It
-;;; provides a command and an optional minor mode (that activates the
-;;; key binding C-c o) to can reduce the size of the SVG contents in
-;;; the current Emacs buffer.
-;;;
-;;; To install this package you should use `use-package', like so:
-;;;
-;;; (use-package svgo
-;;;   :straight '(svgo :type git :host github :repo "hupf/svgo.el")
-;;;   :hook ((image-mode . svgo-mode)
-;;;          (nxml-mode . svgo-mode)))
-
-;;; Author: Mathis Hofer <mathis@fsfe.org>
-;;; Version: 1.0.0
-;;; Keywords: svg, svgo, node
-;;; URL: https://github.com/hupf/svgo.el/
-
-;;; License:
+;;; svgo.el --- SVG optimization with SVGO -*- lexical-binding: t; -*-
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -35,6 +14,26 @@
 ;; along with GNU Emacs; see the file COPYING.  If not, write to the
 ;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 ;; Boston, MA 02110-1301, USA.
+
+;;; Commentary:
+
+;;; This package uses the Node utility SVGO to optimize SVG files.  It
+;;; provides a command and an optional minor mode (that activates the
+;;; key binding C-c o) to can reduce the size of the SVG contents in
+;;; the current Emacs buffer.
+;;;
+;;; To install this package you should use `use-package', like so:
+;;;
+;;; (use-package svgo
+;;;   :straight '(svgo :type git :host github :repo "hupf/svgo.el")
+;;;   :hook ((image-mode . svgo-mode)
+;;;          (nxml-mode . svgo-mode)))
+
+;;; Author: Mathis Hofer <mathis@fsfe.org>
+;;; Version: 1.0.0
+;;; Package-Requires: ((emacs "26.2"))
+;;; Keywords: tools
+;;; URL: https://github.com/hupf/svgo.el/
 
 ;;; Code:
 
@@ -135,8 +134,7 @@ See the command \\[svgo] and https://github.com/svg/svgo."
          result
          before-human
          after-human
-         percentage)
-        ))))
+         percentage)))))
 
 (defun svgo--human-bytes (bytes)
   "Return given number of BYTES as human readable string with unit."
