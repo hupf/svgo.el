@@ -1,4 +1,4 @@
-;;; test-svgo.el --- Tests for svgo.el
+;;; test-svgo.el --- Tests for svgo.el -*- lexical-binding: t; -*-
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
