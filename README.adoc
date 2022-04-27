@@ -1,4 +1,4 @@
-= svg.el
+= svgo.el
 
 image:https://github.com/hupf/svgo.el/actions/workflows/tests.yml/badge.svg[Tests Status,link="https://github.com/hupf/svgo.el/actions/workflows/tests.yml"]
 image:https://img.shields.io/badge/license-GPL_v3-green.svg[GNU GPL v3,link="./LICENSE"]
@@ -26,7 +26,7 @@ Also make sure you have Node/NPM installed on your machine.
 
 image::svgo.gif[Demonstration of the svgo-mode]
 
-After opening a SVG file in Emacs, you can toggle the image display with `C-c C-c`. Then either execute `M-x svgo` or with the `svgo-mode` minor mode configured you can press `C-c o` to optimize the file.
+After opening a SVG file in Emacs, you can execute `M-x svgo` or, with the `svgo-mode` enabled, press `M-o` to optimize the file (either in `image-mode` or after toggling the image display with `C-c C-c` in `nxml-mode`).
 
 If the `svgo` NPM package is missing you will be prompted to automatically install it.
 

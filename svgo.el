@@ -18,9 +18,8 @@
 ;;; Commentary:
 
 ;;; This package uses the Node utility SVGO to optimize SVG files.  It
-;;; provides a command and an optional minor mode (that activates the
-;;; key binding C-c o) to can reduce the size of the SVG contents in
-;;; the current Emacs buffer.
+;;; provides a command and an optional minor mode to reduce the size
+;;; of the SVG contents in the current Emacs buffer.
 ;;;
 ;;; To install this package you should use `use-package', like so:
 ;;;
@@ -78,16 +77,20 @@
 
         (undo))))) ;; If command failed, undo to make sure the region's content is recovered
 
+(defvar svgo-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "M-o") 'svgo)
+    map))
+
 (define-minor-mode svgo-mode
   "Toggle SVGO mode.
 
-When SVGO mode is enabled, the binding C-c o optimizes the SVG
-vector graphic contents in current buffer or selected region with
-SVGO.
-See the command \\[svgo] and https://github.com/svg/svgo."
- :init-value nil
- :lighter " SVGO" ;; The indicator for the mode line.
- :keymap `((,(kbd "C-c o") . svgo)))
+When SVGO mode is enabled, the binding \\<svgo-mode-map>\\[svgo]
+optimizes the SVG vector graphic contents in current buffer or
+selected region with SVGO.  See also the command
+\\<global-map>\\[svgo] and https://github.com/svg/svgo."
+ :lighter " SVGO"
+ :keymap svgo-mode-map)
 
 (defun svgo--ensure ()
   "Ensure SVGO is present or install it if user agrees."
