@@ -24,7 +24,6 @@
 ;;; To install this package you should use `use-package', like so:
 ;;;
 ;;; (use-package svgo
-;;;   :straight '(svgo :type git :host github :repo "hupf/svgo.el")
 ;;;   :hook ((image-mode . svgo-mode)
 ;;;          (nxml-mode . svgo-mode)))
 
