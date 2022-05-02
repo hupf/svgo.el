@@ -30,7 +30,7 @@
           (before-each
            (spy-on 'point-min :and-return-value 0)
            (spy-on 'point-max :and-return-value 100)
-           (spy-on 'svgo--shell-which :and-return-value "/path/to/svgo")
+           (spy-on 'executable-find :and-return-value "/path/to/svgo")
            (spy-on 'message)
            (spy-on 'undo))
 
@@ -47,12 +47,12 @@
               (expect 'undo :to-have-been-called))
 
           (it "prints message if both svgo and npm are missing"
-              (spy-on 'svgo--shell-which :and-return-value nil)
+              (spy-on 'executable-find :and-return-value nil)
               (svgo)
               (expect 'message :to-have-been-called-with "No `svgo' command found and `npm' is not present"))
 
           (it "installs svgo if svgo is missing, npm is present and user accepts"
-              (spy-on 'svgo--shell-which :and-call-fake
+              (spy-on 'executable-find :and-call-fake
                       (lambda (command) (if (string-equal command "npm") "/path/to/npm" nil)))
               (spy-on 'read-answer :and-return-value "yes")
               (spy-on 'shell-command :and-return-value 0)
@@ -62,7 +62,7 @@
               (expect 'shell-command :to-have-been-called-with "npm install -g svgo" "*svgo*" "*svgo*"))
 
           (it "does not install svgo if svgo is missing, npm is present but user rejects"
-              (spy-on 'svgo--shell-which :and-call-fake
+              (spy-on 'executable-find :and-call-fake
                       (lambda (command) (if (string-equal command "npm") "/path/to/npm" nil)))
               (spy-on 'read-answer :and-return-value "no")
               (spy-on 'shell-command :and-return-value 0)
@@ -70,13 +70,6 @@
               (svgo)
               (expect 'read-answer :to-have-been-called)
               (expect 'shell-command :not :to-have-been-called)))
-
-(describe "svgo--shell-which"
-          (it "returns the path to the command if present"
-              (expect (svgo--shell-which "yes") :to-equal "/usr/bin/yes"))
-
-          (it "returns nil if the path is not present"
-              (expect (svgo--shell-which "non-existing-command") :to-be nil)))
 
 (describe "svgo--human-bytes"
           (it "returns \"123 B\" for 123"
