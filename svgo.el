@@ -1,7 +1,7 @@
 ;;; svgo.el --- SVG optimization with SVGO -*- lexical-binding: t; -*-
 
 ;;; Author: Mathis Hofer <mathis@fsfe.org>
-;;; Version: 1.0.0
+;;; Version: 1.0.1
 ;;; Package-Requires: ((emacs "26.2"))
 ;;; Keywords: tools
 ;;; URL: https://github.com/hupf/svgo.el/
