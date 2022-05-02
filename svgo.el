@@ -93,10 +93,10 @@ selected region with SVGO.  See also the command
 
 (defun svgo--ensure ()
   "Ensure SVGO is present or install it if user agrees."
-  (let ((svgo-bin (svgo--shell-which "svgo")))
+  (let ((svgo-bin (executable-find "svgo")))
     (if svgo-bin
         svgo-bin
-      (if (svgo--shell-which "npm")
+      (if (executable-find "npm")
           (if (svgo--prompt-install)
               (if (> (svgo--with-read-only-buffer
                       (shell-command "npm install -g svgo" svgo-process-buffer svgo-process-buffer))
@@ -105,15 +105,8 @@ selected region with SVGO.  See also the command
                     (switch-to-buffer svgo-process-buffer)
                     (message "An error occurred installing `svgo' using NPM")
                     nil)
-                (svgo--shell-which "svgo")))
+                (executable-find "svgo")))
         (message "No `svgo' command found and `npm' is not present")))))
-
-(defun svgo--shell-which (command)
-  "Return the path to the given COMMAND if present or nil."
-  (let ((path (shell-command-to-string (concat "/usr/bin/which " command))))
-    (if (string-equal path "")
-        nil
-      (string-trim path))))
 
 (defun svgo--prompt-install ()
   "Prompt the user whether SVGO should be installed using NPM."
