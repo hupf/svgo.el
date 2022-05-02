@@ -1,5 +1,11 @@
 ;;; svgo.el --- SVG optimization with SVGO -*- lexical-binding: t; -*-
 
+;;; Author: Mathis Hofer <mathis@fsfe.org>
+;;; Version: 1.0.0
+;;; Package-Requires: ((emacs "26.2"))
+;;; Keywords: tools
+;;; URL: https://github.com/hupf/svgo.el/
+
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 3, or (at your option)
@@ -26,12 +32,6 @@
 ;;; (use-package svgo
 ;;;   :hook ((image-mode . svgo-mode)
 ;;;          (nxml-mode . svgo-mode)))
-
-;;; Author: Mathis Hofer <mathis@fsfe.org>
-;;; Version: 1.0.0
-;;; Package-Requires: ((emacs "26.2"))
-;;; Keywords: tools
-;;; URL: https://github.com/hupf/svgo.el/
 
 ;;; Code:
 
