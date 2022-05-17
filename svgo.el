@@ -99,7 +99,7 @@
 (defun svgo--prompt-install ()
   "Prompt the user whether SVGO should be installed using NPM."
   (string-equal
-   (read-answer "No `svgo' command found, would you like to install it? "
+   (read-answer "No `svgo' command found, would you like to install it globally? "
                 '(("yes" ?y "install `svgo' using NPM")
                   ("no" ?n "don't install `svgo'")))
    "yes"))
