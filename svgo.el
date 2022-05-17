@@ -1,10 +1,10 @@
 ;;; svgo.el --- SVG optimization with SVGO -*- lexical-binding: t; -*-
 
-;;; Author: Mathis Hofer <mathis@fsfe.org>
-;;; Version: 1.0.1
-;;; Package-Requires: ((emacs "26.2"))
-;;; Keywords: tools
-;;; URL: https://github.com/hupf/svgo.el/
+;; Author: Mathis Hofer <mathis@fsfe.org>
+;; Version: 1.0.1
+;; Package-Requires: ((emacs "26.2"))
+;; Keywords: tools
+;; URL: https://github.com/hupf/svgo.el/
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -23,15 +23,15 @@
 
 ;;; Commentary:
 
-;;; This package uses the Node utility SVGO to optimize SVG files.  It
-;;; provides a command and an optional minor mode to reduce the size
-;;; of the SVG contents in the current Emacs buffer.
-;;;
-;;; To install this package you should use `use-package', like so:
-;;;
-;;; (use-package svgo
-;;;   :hook ((image-mode . svgo-mode)
-;;;          (nxml-mode . svgo-mode)))
+;; This package uses the Node utility SVGO to optimize SVG files.  It
+;; provides a command and an optional minor mode to reduce the size
+;; of the SVG contents in the current Emacs buffer.
+;;
+;; To install this package you should use `use-package', like so:
+;;
+;; (use-package svgo
+;;   :hook ((image-mode . svgo-mode)
+;;          (nxml-mode . svgo-mode)))
 
 ;;; Code:
 
