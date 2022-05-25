@@ -54,21 +54,21 @@
           (it "installs svgo if svgo is missing, npm is present and user accepts"
               (spy-on 'executable-find :and-call-fake
                       (lambda (command) (if (string-equal command "npm") "/path/to/npm" nil)))
-              (spy-on 'read-answer :and-return-value "yes")
+              (spy-on 'yes-or-no-p :and-return-value t)
               (spy-on 'shell-command :and-return-value 0)
               (spy-on 'shell-command-on-region :and-return-value 0)
               (svgo)
-              (expect 'read-answer :to-have-been-called)
+              (expect 'yes-or-no-p :to-have-been-called-with "No `svgo' command found, would you like to install it globally?")
               (expect 'shell-command :to-have-been-called-with "npm install -g svgo" "*svgo*" "*svgo*"))
 
           (it "does not install svgo if svgo is missing, npm is present but user rejects"
               (spy-on 'executable-find :and-call-fake
                       (lambda (command) (if (string-equal command "npm") "/path/to/npm" nil)))
-              (spy-on 'read-answer :and-return-value "no")
+              (spy-on 'yes-or-no-p :and-return-value nil)
               (spy-on 'shell-command :and-return-value 0)
               (spy-on 'shell-command-on-region :and-return-value 0)
               (svgo)
-              (expect 'read-answer :to-have-been-called)
+              (expect 'yes-or-no-p :to-have-been-called-with "No `svgo' command found, would you like to install it globally?")
               (expect 'shell-command :not :to-have-been-called)))
 
 (describe "svgo--human-bytes"
