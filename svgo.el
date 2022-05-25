@@ -94,7 +94,6 @@
                     (message "An error occurred installing `svgo' using NPM")
                     nil)
                 (executable-find "svgo")))
-        (message "No `svgo' command found and `npm' is not present")))))
 
 (defun svgo--prompt-install ()
   "Prompt the user whether SVGO should be installed using NPM."
@@ -103,6 +102,8 @@
                 '(("yes" ?y "install `svgo' using NPM")
                   ("no" ?n "don't install `svgo'")))
    "yes"))
+        (message "No `svgo' command found and `npm' is not present")
+        nil))))
 
 (defun svgo--with-buffer-size-change (wrapped-function)
   "Call the WRAPPED-FUNCTION and measure the current buffer size before/after."
