@@ -85,7 +85,7 @@
     (if svgo-bin
         svgo-bin
       (if (executable-find "npm")
-          (if (svgo--prompt-install)
+          (if (yes-or-no-p "No `svgo' command found, would you like to install it globally?")
               (if (> (svgo--with-read-only-buffer
                       (shell-command "npm install -g svgo" svgo-process-buffer svgo-process-buffer))
                      0)
@@ -94,14 +94,6 @@
                     (message "An error occurred installing `svgo' using NPM")
                     nil)
                 (executable-find "svgo")))
-
-(defun svgo--prompt-install ()
-  "Prompt the user whether SVGO should be installed using NPM."
-  (string-equal
-   (read-answer "No `svgo' command found, would you like to install it globally? "
-                '(("yes" ?y "install `svgo' using NPM")
-                  ("no" ?n "don't install `svgo'")))
-   "yes"))
         (message "No `svgo' command found and `npm' is not present")
         nil))))
 
