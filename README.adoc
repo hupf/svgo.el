@@ -2,6 +2,7 @@
 
 image:https://github.com/hupf/svgo.el/actions/workflows/tests.yml/badge.svg[Tests Status,link="https://github.com/hupf/svgo.el/actions/workflows/tests.yml"]
 image:https://img.shields.io/badge/license-GPL_v3-green.svg[GNU GPL v3,link="./LICENSE"]
+image:https://melpa.org/packages/svgo-badge.svg[MELPA,link="https://melpa.org/#/svgo"]
 
 [quote]
 SVG optimization within Emacs with SVGO
